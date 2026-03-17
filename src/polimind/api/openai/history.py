@@ -25,16 +25,11 @@ class ConversationHistory:
         self._next_id += 1
         return current
 
-    # ------------------------------------------------------------------ #
-    #  Registro de nodos                                                   #
-    # ------------------------------------------------------------------ #
-
     def add_system(self, content: str) -> int:
         """
         Registra un nuevo nodo de sistema con su propio ID.
         Desactiva cualquier nodo de sistema previamente activo.
         """
-        # Desactivar cualquier system anterior activo
         for node in self._nodes:
             if node["role"] == "system" and node["active"]:
                 node["active"] = False
@@ -58,7 +53,7 @@ class ConversationHistory:
             "id": node_id,
             "role": "user",
             "content": content,
-            "active": False  # Se activará cuando el assistant sea registrado
+            "active": False
         })
         return node_id
 
@@ -74,15 +69,10 @@ class ConversationHistory:
             "active": True
         })
 
-        # Activar también el nodo user correspondiente
         for node in self._nodes:
             if node["id"] == node_id and node["role"] == "user":
                 node["active"] = True
                 break
-
-    # ------------------------------------------------------------------ #
-    #  Activación / Desactivación                                          #
-    # ------------------------------------------------------------------ #
 
     def toggle(self, node_id: int, active: Optional[bool] = None) -> None:
         """
@@ -95,7 +85,7 @@ class ConversationHistory:
 
         Args:
             node_id: El ID del nodo a modificar.
-            active: True para activar, False para desactivar. 
+            active: True para activar, False para desactivar.
                     Si es None, invierte el estado actual (toggle).
         """
         nodes_with_id = [n for n in self._nodes if n["id"] == node_id]
@@ -109,29 +99,22 @@ class ConversationHistory:
             new_state = active if active is not None else not first_node["active"]
             first_node["active"] = new_state
 
-            # Si se activa este system, desactivar los demás
             if new_state:
                 for node in self._nodes:
                     if node["role"] == "system" and node["id"] != node_id:
                         node["active"] = False
         else:
-            # Para user/assistant: verificar que el par esté completo
             roles_in_id = {n["role"] for n in nodes_with_id}
             if not {"user", "assistant"}.issubset(roles_in_id):
                 raise ValueError(
                     f"El nodo {node_id} no tiene un par user/assistant completo. No puede activarse/desactivarse."
                 )
 
-            # Determinar el nuevo estado a partir de cualquiera de los dos
             reference = next(n for n in nodes_with_id if n["role"] == "user")
             new_state = active if active is not None else not reference["active"]
 
             for node in nodes_with_id:
                 node["active"] = new_state
-
-    # ------------------------------------------------------------------ #
-    #  Construcción de mensajes para la API                                #
-    # ------------------------------------------------------------------ #
 
     def build_messages(self) -> List[Dict[str, Any]]:
         """
@@ -141,7 +124,6 @@ class ConversationHistory:
         """
         messages = []
 
-        # 1. Buscar el último nodo system activo
         last_system = None
         for node in self._nodes:
             if node["role"] == "system" and node["active"]:
@@ -153,7 +135,6 @@ class ConversationHistory:
                 "content": last_system["content"]
             })
 
-        # 2. Agregar todos los nodos user/assistant activos en orden
         for node in self._nodes:
             if node["role"] in ("user", "assistant") and node["active"]:
                 messages.append({
@@ -172,10 +153,6 @@ class ConversationHistory:
                 seen.add(node["id"])
                 active_ids.append(node["id"])
         return active_ids
-
-    # ------------------------------------------------------------------ #
-    #  Representación                                                      #
-    # ------------------------------------------------------------------ #
 
     def to_dataframe(self) -> pd.DataFrame:
         """Devuelve el historial completo como un DataFrame de pandas."""

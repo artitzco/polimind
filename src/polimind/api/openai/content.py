@@ -36,26 +36,24 @@ class Image(ContentPart):
 
     def encode(self) -> Dict[str, Any]:
         """
-        Codifica la instancia y construye la estructura de diccionario en el momento en el 
+        Codifica la instancia y construye la estructura de diccionario en el momento en el
         que el cliente lo requiera para su envío.
         """
         if self.path_or_url.startswith("http://") or self.path_or_url.startswith("https://"):
             url = self.path_or_url
         else:
-            # Es una ruta local, así que lo convertimos a base64
             if not os.path.exists(self.path_or_url):
                 raise FileNotFoundError(
                     f"No se pudo encontrar la imagen en la ruta local: {self.path_or_url}")
 
             mime_type, _ = mimetypes.guess_type(self.path_or_url)
             if not mime_type:
-                mime_type = "image/jpeg"  # Fallback por defecto
+                mime_type = "image/jpeg"
 
             with open(self.path_or_url, "rb") as image_file:
                 encoded_string = base64.b64encode(
-                    image_file.read()).decode('utf-8')
+                    image_file.read()).decode("utf-8")
 
-            # Formatear a la sintaxis que pide OpenAI (Data URL)
             url = f"data:{mime_type};base64,{encoded_string}"
 
         return {

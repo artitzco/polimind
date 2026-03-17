@@ -47,7 +47,6 @@ class Metrics:
             flat_row[("model",)] = record["model"]
             flat_row[("active_nodes",)] = record["active_nodes"]
 
-            # Aplanar el diccionario de uso de tokens recursivamente
             def _flatten(source: dict, parent_key: tuple = ()) -> None:
                 for k, v in source.items():
                     new_key = parent_key + (k,)
@@ -61,7 +60,6 @@ class Metrics:
 
         df = pd.DataFrame(rows)
 
-        # Emparejar las tuplas al máximo nivel de profundidad
         max_len = max(len(t) for t in df.columns)
         padded_columns = [
             t + ("",) * (max_len - len(t))

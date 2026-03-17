@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "oiaapi"
+name = "polimind"
 version = "0.1.0"
-description = "A minimalist and powerful interface for the OpenAI API with multimodal and history management support."
+description = "An extensible Python toolkit for AI capabilities, starting with a structured OpenAI interface."
 authors = [
     {name = "artitzco", email = "artitzco@proton.me"},
 ]
@@ -17,7 +17,7 @@ dependencies = [
     "pillow>=9.0.0",
 ]
 license = {text = "MIT"}
-keywords = ["openai", "api", "chat", "multimodal", "history", "metrics"]
+keywords = ["ai", "openai", "api", "chat", "multimodal", "history", "metrics"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

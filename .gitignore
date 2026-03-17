@@ -1,0 +1,34 @@
+# Custom Project Directories to Ignore
+_pruebas/
+.agents/
+notebooks/
+img/
+output/
+.gitignore
+scripts/
+test/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# VS Code / IDEs
+.vscode/
+.idea/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+openai-api_architecture.drawio

@@ -1,6 +1,6 @@
-# oiaapi (OpenAI API Python Interface)
+# polimind
 
-A minimalist yet powerful Python interface for the OpenAI API, designed for structured conversation management and advanced multimodal interactions.
+An extensible Python toolkit for AI capabilities. Its current public OpenAI interface lives under `polimind.api.openai` and preserves the existing chat, history, multimodal, and metrics workflow.
 
 ## Features
 
@@ -17,7 +17,7 @@ A minimalist yet powerful Python interface for the OpenAI API, designed for stru
 
 ```bash
 # Via Pip (once published)
-pip install oiaapi
+pip install polimind
 
 # From source
 git clone https://github.com/artitzco/openai-api.git
@@ -28,7 +28,7 @@ pip install .
 ## Quick Start
 
 ```python
-from oiaapi import Client, Image
+from polimind.api.openai import Client, Image
 
 # Initialize the main client
 client = Client(api_key="your-api-key") # or use OPENAI_API_KEY env var
@@ -59,7 +59,8 @@ new_chat_recovered = client.load_chat("my_session.json")
 
 ## Project Structure
 
-- `src/oiaapi/`: Core library modules.
+- `src/polimind/`: Root package for the project.
+- `src/polimind/api/openai/`: OpenAI integration exposed by the package.
   - `__init__.py`: Contains the `Client` factory and exports.
   - `core.py`: Contains the `Chat` session manager.
   - `history.py`: Logic for node-based conversation management.

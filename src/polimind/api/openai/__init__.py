@@ -11,7 +11,7 @@ from .metrics import Metrics
 
 class Client:
     """
-    Clase principal que administra la instancia persistente del motor de OpenAI y 
+    Clase principal que administra la instancia persistente del motor de OpenAI y
     nos permite iniciar nuevas conversaciones (chats) o recuperar conversaciones guardadas.
     """
 
