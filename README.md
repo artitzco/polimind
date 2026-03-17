@@ -20,8 +20,8 @@ An extensible Python toolkit for AI capabilities. Its current public OpenAI inte
 pip install polimind
 
 # From source
-git clone https://github.com/artitzco/openai-api.git
-cd openai-api
+git clone https://github.com/artitzco/polimind.git
+cd polimind
 pip install .
 ```
 
